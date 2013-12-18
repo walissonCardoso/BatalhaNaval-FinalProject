@@ -28,7 +28,7 @@ public class PortaAvioes extends Navio{
 
 	@Override
 	public String getNome() {
-		return "PortaAvioes";
+		return "Porta Aviões";
 	}
 
 }

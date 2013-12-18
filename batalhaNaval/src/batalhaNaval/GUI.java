@@ -69,11 +69,9 @@ public class GUI {
 	}
 	
 	public void criaCampo(Tabuleiro tab){
-		
-		//if(campo != null)
-		//	campo.setVisible(false);
+
 		if(campo == null)
-		campo = new JFrame();
+			campo = new JFrame();
 		
 		
 		campo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,8 +83,9 @@ public class GUI {
 		campo.repaint();
 	}
 	
-	public void atualizaCampo(Tabuleiro tab){
-		
+	public void resetFrame(){
+		campo.setVisible(false);
+		campo = null;
 	}
 	
 	public int selecionaDificuldade(){

@@ -46,6 +46,8 @@ public class controlaJogo {
 	
 	public static void posicionarAtacaveis(){
 		
+		tab = new Tabuleiro();
+		
 		ataq1[0] = new CacaMinas();
 		ataq1[1] = new Fragata();
 		ataq1[3] = new Submarino();
@@ -84,16 +86,26 @@ public class controlaJogo {
 		ataq2[3] = new Submarino();
 		ataq2[2] = new Encouracado();
 		ataq2[4] = new PortaAvioes();
-		tab.colocarNavio(ataq1[0],0,0, "horizontal", 0);
-		tab.colocarNavio(ataq1[1],1,1, "horizontal", 1);
-		tab.colocarNavio(ataq1[2],5,3, "vertical", 2);
-		tab.colocarNavio(ataq1[3],4,7, "horizontal", 3);
-		tab.colocarNavio(ataq1[4],9,5, "vertical", 4);
+		
+		
+		for(int i = 0; i < 5; i++){
+			valido = false;
+			
+			while(!valido){
+				orientacao = Math.abs(rand.nextInt())%2;
+				if(orientacao == 1) auxOrient = "horizontal";
+				else auxOrient = "vertical";
+				x = Math.abs(rand.nextInt()) % 10;
+				y = Math.abs(rand.nextInt()) % 10;
+				valido = tab.colocarNavio(ataq2[i], x, y, auxOrient, i);
+			}
+			
+			
+		}
 	}
 	
 	public static void modoTreino(){
 		
-		posicionarAtacaveis();
 		int dificuldade = gui.selecionaDificuldade();
 		
 		switch(dificuldade){
@@ -117,8 +129,6 @@ public class controlaJogo {
 				+ "\nSuas unicas armas são suas embarcações e sua coragem!"
 				+ "\nBoa sorte marujo, e que Deus tenha piedade de sua"
 				+ "\nintrépida alma.");
-		
-		posicionarAtacaveis();
 		
 		JOptionPane.showMessageDialog(null, "O capitão Tanatus avista sua frota ao longe."
 				+ "\nEstre cruel pirata não deixara a oportunidade"
@@ -159,6 +169,9 @@ public class controlaJogo {
 		boolean valida;
 		int x,y;
 		
+		posicionarAtacaveis();
+		gui.criaCampo(tab);
+		
 		while(vencendo){
 			
 			valida = false;
@@ -170,6 +183,9 @@ public class controlaJogo {
 				if(!valida)
 					JOptionPane.showMessageDialog(null,"Posicao inválida para ataque!");
 			}
+			for(int i =0; i < 10; i++)
+				for(int j = 0; j < 10; j++)
+					tab.transferirDanos(ataq2, i, j);
 			
 			gui.criaCampo(tab);
 			
@@ -192,6 +208,7 @@ public class controlaJogo {
 			}
 		}
 		
+		gui.resetFrame();
 		return getNAtacaveisSaos(1)*5; //Cada navio são 5 pontos
 	}
 	

@@ -23,7 +23,7 @@ public class Fragata extends Navio{
 
 	@Override
 	public void atacar() {
-		JOptionPane.showMessageDialog(null, "\nA fragata atacará!");
+		JOptionPane.showMessageDialog(null, "\nA Fragata atacará!");
 	}
 
 	@Override

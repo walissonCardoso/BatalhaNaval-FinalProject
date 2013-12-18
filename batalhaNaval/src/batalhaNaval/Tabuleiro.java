@@ -16,11 +16,11 @@ public class Tabuleiro {
 	
 	public boolean colocarNavio(Atacavel ataq, final int x, final int y, final String orientacao, final int posNaLista){
 		
-		if(x < 0 || y < 0 || x > 2*largura || y > altura ){
+		if(x < 0 || y < 0 || x >= 2*largura || y >= altura ){
 			return false;
-		}else if(orientacao == "horizontal" && x + ataq.getTamanho() > 2*largura){
+		}else if(orientacao == "horizontal" && x + ataq.getTamanho() >= 2*altura){
 			return false;
-		}else if(orientacao == "vertical" && y + ataq.getTamanho() > altura){
+		}else if(orientacao == "vertical" && y + ataq.getTamanho() >= largura){
 			return false;
 		}
 		int incx = 0, incy = 0;
@@ -30,7 +30,7 @@ public class Tabuleiro {
 			incy = 1;
 		
 		for(int i = 0; i < ataq.getTamanho(); i++)
-			if(cel[x+i*incx][y+i*incy].getEstado() != "vazio")
+			if(cel[x+i*incx][y+i*incy].getEstado() != "vazio" || x/10 != (x+i*incx)/10)
 				return false;
 		
 		for(int i = 0; i < ataq.getTamanho(); i++)

@@ -30,7 +30,7 @@ public class Encouracado extends Navio{
 
 	@Override
 	public String getNome() {
-		return "Encouracado";
+		return "Encouraçado";
 	}
 
 }
