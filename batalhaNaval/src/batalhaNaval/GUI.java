@@ -42,7 +42,30 @@ public class GUI {
 	}
 	
 	public void mostraAjuda(){
-		
+		JOptionPane.showMessageDialog(null,"Jogar é bastante símples."
+				+ "\nA numeração dos menus ao lado sempre vai fornecer"
+				+ "\no número para uma opção bem delineada, assim"
+				+ "\ncomo você chegou nesta ajuda que agora lê."
+				+ "\n\nComeçando o jogo, você deve posicionar seus navios."
+				+ "\nA parte de cima da tela é o campo do seu inimigo, logo"
+				+ "\nvocê não deve poder ver a posição dos navios."
+				+ "\n\nPara posicionar os seus objetos antes do jogo basta"
+				+ "\ndeclarar o orientação dele (se ficará na horizontal ou"
+				+ "\nvertical) e depois inserir as coordenadas da primeira"
+				+ "\ncélula da embarcação. Note que a numeração de células "
+				+ "\ncomeça em zero e vai até dez. Se horizontal, o objeto"
+				+ "\ndeve caber inteiro na tela de dez posições começando"
+				+ "\nda casa por você escolhida na posição horizontal. O"
+				+ "\nmesmo vale para a vertical."
+				+ "\n\nApós posicionar os cinco objetos, comece disparando"
+				+ "\nnas coordenadas que correspondentes do seu adversário e"
+				+ "\ntente acertar as cinco embarcações ocultas."
+				+ "\n\nO jogo acaba quando algum jogador perder seus cinco"
+				+ "\nobjetos."
+				+ "\n\nNote que quando um disparo for certeiro, uma posicao"
+				+ "\nda embarcação adversária será mostrada. Ache as demais"
+				+ "\npara afundá-la. Todas as embarcações precisam ter todas as"
+				+ "\nposições atingidas para afundar.");
 	}
 	
 	public void criaCampo(Tabuleiro tab){

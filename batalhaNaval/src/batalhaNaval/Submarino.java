@@ -51,7 +51,7 @@ public class Submarino implements Atacavel{
 
 	@Override
 	public boolean funcionando() {
-		if(nPosicoesSas > 1)
+		if(nPosicoesSas > 0)
 			return true;
 		else
 			return false;
