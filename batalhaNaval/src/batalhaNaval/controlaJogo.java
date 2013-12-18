@@ -183,9 +183,6 @@ public class controlaJogo {
 				if(!valida)
 					JOptionPane.showMessageDialog(null,"Posicao inválida para ataque!");
 			}
-			for(int i =0; i < 10; i++)
-				for(int j = 0; j < 10; j++)
-					tab.transferirDanos(ataq2, i, j);
 			
 			gui.criaCampo(tab);
 			

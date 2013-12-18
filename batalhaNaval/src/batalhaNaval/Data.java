@@ -69,7 +69,6 @@ public class Data {
 	}
 	
 	public static long time(){
-		Date date = new Date(1);
-        return date.getTime();
+        return System.currentTimeMillis();
 	}
 }
