@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 public class controlaJogo {
 	
 	private static int pontuacao = 0;
+	private static boolean vencendo;
 	private static Tabuleiro tab = new Tabuleiro();
 	private static Atacavel ataq1[] = new Atacavel[5];
 	private static Atacavel ataq2[] = new Atacavel[5];
@@ -16,11 +17,10 @@ public class controlaJogo {
 	
 	public static void main(String[] args) {
 		
-		rand.setSeed(1);//TODO pehar tempo do relógio
+		rand.setSeed(Data.time());
 		
 		gui.apresentarJogo();
 		int opcao = gui.mostraMenu();
-		
 		
 		while(opcao != 5){
 			switch(opcao){
@@ -28,6 +28,7 @@ public class controlaJogo {
 				modoTreino();
 				break;
 			case 2:
+				modoArcade();
 				break;
 			case 3:
 				gui.mostrarPontuacoes();
@@ -55,6 +56,8 @@ public class controlaJogo {
 		String auxOrient;
 		boolean valido;
 		
+		gui.criaCampo(tab);
+		
 		for(int i = 0; i < 5; i++){
 			orientacao = Integer.parseInt(JOptionPane.showInputDialog("Qual a orientação do " + ataq1[i].getNome() + "?"
 					+ "\n1 - Horizontal"
@@ -74,7 +77,6 @@ public class controlaJogo {
 			}
 			
 			gui.criaCampo(tab);
-			gui.atualizaCampo(tab);
 		}
 		
 		ataq2[0] = new CacaMinas();
@@ -107,11 +109,57 @@ public class controlaJogo {
 		}
 	}
 	
+	public static void modoArcade(){
+		
+		pontuacao = 20;
+		
+		JOptionPane.showMessageDialog(null, "Você está em meio a uma grande batalha."
+				+ "\nSuas unicas armas são suas embarcações e sua coragem!"
+				+ "\nBoa sorte marujo, e que Deus tenha piedade de sua"
+				+ "\nintrépida alma.");
+		
+		posicionarAtacaveis();
+		
+		JOptionPane.showMessageDialog(null, "O capitão Tanatus avista sua frota ao longe."
+				+ "\nEstre cruel pirata não deixara a oportunidade"
+				+ "\nde pilhagem passar em vão!"
+				+ "\nPrepare-se, destemido capitão!");
+		
+		pontuacao += jogoFacil();
+		
+		if(vencendo){
+			JOptionPane.showMessageDialog(null, "Parabéns! Mas esta batalha foi fácil."
+					+ "\nA cobiça de Tanatus é tamanha que este velho"
+					+ "\nLobo do mar não enxerga a suas chances nem quando"
+					+ "\nesta prestes a afundar."
+					+ "\n\nMas talvez o pior não sejam os piratas e suas"
+					+ "\npobres pontarias, mas as forças armadas e suas"
+					+ "\npulsantes máquinas de guerra!"
+					+ "\nO pais de Argadácia é seu verdadeiro inimigo."
+					+ "\nErga-se soldado, e defenda seu país, Lisarb!!");
+			pontuacao += jogoMedio();
+		}
+		
+		if(vencendo){
+			JOptionPane.showMessageDialog(null, "As frotas não lhe darão discanço. Surge"
+					+ "\no horizonte a derradeira tentativa de sucesso nos mares"
+					+ "\npelo país de Argadácia. A tropa de elite dos mares, temida"
+					+ "\npelos mais gélidos corações dos mares.");
+			pontuacao += jogoDificil();
+		}
+		
+		JOptionPane.showMessageDialog(null, "Lutaste com bravura e ânimo dignos de"
+				+ "\nserem registrados nos livros, nobre capitão!!");
+		
+		gui.salvarPontuacao(pontuacao);
+	}
+	
 	public static int jogoFacil(){
-		boolean continua = true, valida;
+		vencendo = true;
+		boolean valida;
 		int x,y;
 		
-		while(continua){
+		while(vencendo){
 			
 			valida = false;
 			JOptionPane.showMessageDialog(null,"Seu Turno de atacar!");
@@ -124,9 +172,8 @@ public class controlaJogo {
 			}
 			
 			gui.criaCampo(tab);
-			gui.atualizaCampo(tab);
 			
-			JOptionPane.showMessageDialog(null,"Agora é a vez do computador");
+			JOptionPane.showMessageDialog(null,"Agora é a vez do seu adversário");
 			valida = false;
 			while(!valida){
 				x = Math.abs(rand.nextInt()) % 10;
@@ -135,14 +182,13 @@ public class controlaJogo {
 			}
 			
 			gui.criaCampo(tab);
-			gui.atualizaCampo(tab);
 			
 			if(getNAtacaveisSaos(2) == 0){
 				JOptionPane.showMessageDialog(null,"Você venceu!!");
-				continua = false;
+				break;
 			}else if(getNAtacaveisSaos(1) == 0){
 				JOptionPane.showMessageDialog(null,"Você Perdeu.");
-				continua = false;
+				vencendo = false;
 			}
 		}
 		
@@ -169,5 +215,4 @@ public class controlaJogo {
 			JOptionPane.showMessageDialog(null, "Ops, este jogador não existe");
 		return nAtacaveis;
 	}
-
 }

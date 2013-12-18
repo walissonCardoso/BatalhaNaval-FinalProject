@@ -1,7 +1,5 @@
 package batalhaNaval;
 
-import java.util.Random;
-
 import javax.swing.JOptionPane;
 
 public abstract class Navio implements Atacavel {

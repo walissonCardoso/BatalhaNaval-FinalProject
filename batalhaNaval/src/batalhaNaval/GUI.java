@@ -1,5 +1,11 @@
 package batalhaNaval;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -40,7 +46,12 @@ public class GUI {
 	}
 	
 	public void criaCampo(Tabuleiro tab){
+		
+		//if(campo != null)
+		//	campo.setVisible(false);
+		if(campo == null)
 		campo = new JFrame();
+		
 		
 		campo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		campo.setSize(13*sizeCelula, 29*sizeCelula);
@@ -48,6 +59,7 @@ public class GUI {
 		
 		DesenhaTabuleiro desLi = new DesenhaTabuleiro(tab,sizeCelula);
 		campo.add(desLi);
+		campo.repaint();
 	}
 	
 	public void atualizaCampo(Tabuleiro tab){
@@ -66,12 +78,45 @@ public class GUI {
 	}
 	
 	public void mostrarPontuacoes(){
-		JOptionPane.showMessageDialog(null, "Ranking"
-				+ "\n\n1 - AAA"
-				+ "\n2 - Walisson");//TODO ler isso de um arquivo
+		BufferedReader arqPont = null;
+		try{
+			arqPont = new BufferedReader(new FileReader("Pontuacoes.txt"));
+		}catch(IOException e){ e.printStackTrace(); }
+		
+		String aux = null, lista = "";
+		try{
+			aux = arqPont.readLine();
+		}catch(IOException e){ e.printStackTrace(); }
+		
+		while(aux != null){
+			lista = lista + "\n" + aux;
+			try{
+				aux = arqPont.readLine();
+			}catch(IOException e){ e.printStackTrace(); }
+		}
+		
+		try {
+			arqPont.close();
+		} catch (IOException e) {e.printStackTrace();}
+		
+		JOptionPane.showMessageDialog(null, "Pontuacoes:" + "\n\n" + lista);
 	}
 	
 	public void salvarPontuacao(final int pontuacao){
-		//TODO salvar em arquivo
+		
+		String nome = JOptionPane.showInputDialog("Qual seu nome?");
+		
+		BufferedWriter arqPont = null;
+		try{
+			arqPont = new BufferedWriter(new FileWriter("Pontuacoes.txt",true));
+		}catch(IOException e){ e.printStackTrace(); }
+		
+		try{
+			arqPont.write("\r\n" + Data.hoje() + " " + nome + " - " + pontuacao);
+		}catch(IOException e){ e.printStackTrace(); }
+		
+		try {
+			arqPont.close();
+		} catch (IOException e) {e.printStackTrace();}
 	}
 }

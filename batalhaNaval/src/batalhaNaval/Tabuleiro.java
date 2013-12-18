@@ -1,13 +1,10 @@
 package batalhaNaval;
 
-import javax.swing.JOptionPane;
 
 public class Tabuleiro {
 
 	private final int largura = 10;
 	private final int altura = 10;
-	private int nNaviosPlay1;
-	private int nNaviosPlay2;
 	Celula cel[][];
 	
 	public Tabuleiro() {
@@ -43,7 +40,7 @@ public class Tabuleiro {
 	
 	public boolean transferirDanos(Atacavel ataq[], final int x, final int y){
 		
-		if(x < 0 || y < 0 || x >= 2*altura || y >= 2*largura)
+		if(x < 0 || y < 0 || x >= 2*altura || y >= largura)
 			return false;
 		
 		if(cel[x][y].getEstado() == "atingido")
