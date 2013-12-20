@@ -2,7 +2,7 @@ package batalhaNaval;
 
 import javax.swing.JOptionPane;
 
-public class Submarino implements Atacavel{
+public class Submarino implements Defensavel{
 	
 	private final int tamanho = 3;
 	private int nPosicoesSas;
@@ -23,12 +23,10 @@ public class Submarino implements Atacavel{
 	@Override
 	public boolean ataqueEspecial() {
 		int opcao = JOptionPane.showConfirmDialog(null,"Submarino, arma silenciosa!"
-				+ "\nPor 25 pontos o ataque especial dá a"
+				+ "\nPor 35 pontos o ataque especial dá a"
 				+ "\noportunidade de atacar uma coluna inteira"
-				+ "\ncom um torpedo até que algum alvo seja"
-				+ "atingido."
 				+ "\nQuer fazer isso?");
-		if(opcao == 1)
+		if(opcao == 0)
 			return true;
 		else
 			return false;
@@ -65,5 +63,10 @@ public class Submarino implements Atacavel{
 	@Override
 	public String getNome() {
 		return "Submarino";
+	}
+
+	@Override
+	public int getPontosAtaqueEspecial() {
+		return 35;
 	}
 }

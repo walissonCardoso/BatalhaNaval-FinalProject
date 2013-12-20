@@ -2,7 +2,7 @@ package batalhaNaval;
 
 import javax.swing.JOptionPane;
 
-public abstract class Navio implements Atacavel {
+public abstract class Navio implements Defensavel {
 	
 	
 	private int nPosicoesSas;

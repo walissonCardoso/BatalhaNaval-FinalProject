@@ -65,7 +65,9 @@ public class GUI {
 				+ "\n\nNote que quando um disparo for certeiro, uma posicao"
 				+ "\nda embarcação adversária será mostrada. Ache as demais"
 				+ "\npara afundá-la. Todas as embarcações precisam ter todas as"
-				+ "\nposições atingidas para afundar.");
+				+ "\nposições atingidas para afundar."
+				+ "\n\nPara usar ataques especiais no modo arcade, digite nas"
+				+ "\n\ncoordenadas -1 e -1");
 	}
 	
 	public void criaCampo(Tabuleiro tab){

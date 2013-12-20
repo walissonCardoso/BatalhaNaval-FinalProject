@@ -8,9 +8,12 @@ public class controlaJogo {
 	
 	private static int pontuacao = 0;
 	private static boolean vencendo;
-	private static Tabuleiro tab = new Tabuleiro();
-	private static Atacavel ataq1[] = new Atacavel[5];
-	private static Atacavel ataq2[] = new Atacavel[5];
+	private static int altura = 10;
+	private static int largura = 10;
+	private static Tabuleiro tab = new Tabuleiro(altura,largura);
+	private static int nDefensaveis = 5;
+	private static Defensavel def1[] = new Defensavel[nDefensaveis];
+	private static Defensavel def2[] = new Defensavel[nDefensaveis];
 	private static GUI gui = new GUI();
 	
 	private static Random rand = new Random();
@@ -44,68 +47,9 @@ public class controlaJogo {
 		}
 	}
 	
-	public static void posicionarAtacaveis(){
-		
-		tab = new Tabuleiro();
-		
-		ataq1[0] = new CacaMinas();
-		ataq1[1] = new Fragata();
-		ataq1[3] = new Submarino();
-		ataq1[2] = new Encouracado();
-		ataq1[4] = new PortaAvioes();
-		
-		int x,y,orientacao;
-		String auxOrient;
-		boolean valido;
-		
-		gui.criaCampo(tab);
-		
-		for(int i = 0; i < 5; i++){
-			orientacao = Integer.parseInt(JOptionPane.showInputDialog("Qual a orientação do " + ataq1[i].getNome() + "?"
-					+ "\n1 - Horizontal"
-					+ "\n2 - Vertical"));
-			
-			if(orientacao == 1) auxOrient = "horizontal";
-			else auxOrient = "vertical";
-			
-			x = Integer.parseInt(JOptionPane.showInputDialog("Qual a coordenada horizontal?"));
-			y = Integer.parseInt(JOptionPane.showInputDialog("Qual a coordenada vertical?"));
-			
-			valido = tab.colocarNavio(ataq1[i], x+10, y, auxOrient, i);
-
-			if(!valido){
-				JOptionPane.showMessageDialog(null, "Posição do " + ataq1[i].getNome() +" não éh valida");
-				i--;
-			}
-			
-			gui.criaCampo(tab);
-		}
-		
-		ataq2[0] = new CacaMinas();
-		ataq2[1] = new Fragata();
-		ataq2[3] = new Submarino();
-		ataq2[2] = new Encouracado();
-		ataq2[4] = new PortaAvioes();
-		
-		
-		for(int i = 0; i < 5; i++){
-			valido = false;
-			
-			while(!valido){
-				orientacao = Math.abs(rand.nextInt())%2;
-				if(orientacao == 1) auxOrient = "horizontal";
-				else auxOrient = "vertical";
-				x = Math.abs(rand.nextInt()) % 10;
-				y = Math.abs(rand.nextInt()) % 10;
-				valido = tab.colocarNavio(ataq2[i], x, y, auxOrient, i);
-			}
-			
-			
-		}
-	}
-	
 	public static void modoTreino(){
 		
+		pontuacao = 0;
 		int dificuldade = gui.selecionaDificuldade();
 		
 		switch(dificuldade){
@@ -167,9 +111,9 @@ public class controlaJogo {
 	public static int jogoFacil(){
 		vencendo = true;
 		boolean valida;
-		int x,y;
+		int x = 0,y = 0;
 		
-		posicionarAtacaveis();
+		posicionarDefensaveis();
 		gui.criaCampo(tab);
 		
 		while(vencendo){
@@ -179,34 +123,36 @@ public class controlaJogo {
 			while(!valida){
 				x = Integer.parseInt(JOptionPane.showInputDialog("Qual a coordenada horizontal?"));
 				y = Integer.parseInt(JOptionPane.showInputDialog("Qual a coordenada vertical?"));
-				valida = tab.transferirDanos(ataq2, x, y);
+				valida = tab.transferirDanos(def2, x, y, pontuacao);
 				if(!valida)
 					JOptionPane.showMessageDialog(null,"Posicao inválida para ataque!");
 			}
+			pontuacao = pontuacao - tab.getReduzPontos();
 			
 			gui.criaCampo(tab);
 			
 			JOptionPane.showMessageDialog(null,"Agora é a vez do seu adversário");
 			valida = false;
 			while(!valida){
-				x = Math.abs(rand.nextInt()) % 10;
-				y = Math.abs(rand.nextInt()) % 10;
-				valida = tab.transferirDanos(ataq1, x+10, y);
+				x = Math.abs(rand.nextInt()) % altura;
+				y = Math.abs(rand.nextInt()) % largura;
+				valida = tab.transferirDanos(def1, x+altura, y, pontuacao);
 			}
+			pontuacao = pontuacao - tab.getReduzPontos();
 			
 			gui.criaCampo(tab);
 			
-			if(getNAtacaveisSaos(2) == 0){
+			if(getNDefensaveisSaos(2) == 0){
 				JOptionPane.showMessageDialog(null,"Você venceu!!");
 				break;
-			}else if(getNAtacaveisSaos(1) == 0){
+			}else if(getNDefensaveisSaos(1) == 0){
 				JOptionPane.showMessageDialog(null,"Você Perdeu.");
 				vencendo = false;
 			}
 		}
 		
 		gui.resetFrame();
-		return getNAtacaveisSaos(1)*5; //Cada navio são 5 pontos
+		return getNDefensaveisSaos(1)*5; //Cada navio são 5 pontos
 	}
 	
 	public static int jogoMedio(){
@@ -217,16 +163,76 @@ public class controlaJogo {
 		return jogoMedio();
 	}
 	
-	public static int getNAtacaveisSaos(final int jogador){
-		int nAtacaveis = 0;
+	public static void posicionarDefensaveis(){
+		
+		tab = new Tabuleiro(altura,largura);
+		
+		def1[0] = new CacaMinas();
+		def1[1] = new Fragata();
+		def1[3] = new Submarino();
+		def1[2] = new Encouracado();
+		def1[4] = new PortaAvioes();
+		
+		int x,y,orientacao;
+		String auxOrient;
+		boolean valido;
+		
+		gui.criaCampo(tab);
+		
+		for(int i = 0; i < nDefensaveis; i++){
+			orientacao = Integer.parseInt(JOptionPane.showInputDialog("Qual a orientação do " + def1[i].getNome() + "?"
+					+ "\n1 - Horizontal"
+					+ "\n2 - Vertical"));
+			
+			if(orientacao == 1) auxOrient = "horizontal";
+			else auxOrient = "vertical";
+			
+			x = Integer.parseInt(JOptionPane.showInputDialog("Qual a coordenada horizontal?"));
+			y = Integer.parseInt(JOptionPane.showInputDialog("Qual a coordenada vertical?"));
+			
+			valido = tab.colocarNavio(def1[i], x+10, y, auxOrient, i);
+
+			if(!valido){
+				JOptionPane.showMessageDialog(null, "Posição do " + def1[i].getNome() +" não éh valida");
+				i--;
+			}
+			
+			gui.criaCampo(tab);
+		}
+		
+		def2[0] = new CacaMinas();
+		def2[1] = new Fragata();
+		def2[3] = new Submarino();
+		def2[2] = new Encouracado();
+		def2[4] = new PortaAvioes();
+		
+		
+		for(int i = 0; i < 5; i++){
+			valido = false;
+			
+			while(!valido){
+				orientacao = Math.abs(rand.nextInt())%2;
+				if(orientacao == 1) auxOrient = "horizontal";
+				else auxOrient = "vertical";
+				x = Math.abs(rand.nextInt()) % altura;
+				y = Math.abs(rand.nextInt()) % largura;
+				valido = tab.colocarNavio(def2[i], x, y, auxOrient, i);
+			}
+			
+			
+		}
+	}
+	
+	public static int getNDefensaveisSaos(final int jogador){
+		int nDefensaveis = 0;
 		if(jogador == 1){
-			for(int i = 0; i < ataq1.length; i++)
-				if(ataq1[i].funcionando()) nAtacaveis++;
+			for(int i = 0; i < def1.length; i++)
+				if(def1[i].funcionando()) nDefensaveis++;
 		}else if(jogador == 2){
-			for(int i = 0; i < ataq2.length; i++)
-				if(ataq2[i].funcionando()) nAtacaveis++;
+			for(int i = 0; i < def2.length; i++)
+				if(def2[i].funcionando()) nDefensaveis++;
 		}else
 			JOptionPane.showMessageDialog(null, "Ops, este jogador não existe");
-		return nAtacaveis;
+		return nDefensaveis;
 	}
 }

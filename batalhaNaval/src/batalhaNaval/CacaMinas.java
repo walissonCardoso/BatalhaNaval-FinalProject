@@ -14,7 +14,7 @@ public class CacaMinas extends Navio {
 				+ "\nPor 5 pontos o ataque especial dá"
 				+ "\na oportunidade de atacar duas vezes."
 				+ "\nQuer fazer isso?");
-		if(opcao == 1)
+		if(opcao == 0)
 			return true;
 		else
 			return false;
@@ -28,6 +28,11 @@ public class CacaMinas extends Navio {
 	@Override
 	public String getNome() {
 		return "caca-minas";
+	}
+
+	@Override
+	public int getPontosAtaqueEspecial() {
+		return 5;
 	}
 
 }

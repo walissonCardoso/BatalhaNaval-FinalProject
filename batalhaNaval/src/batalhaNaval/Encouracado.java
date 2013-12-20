@@ -15,9 +15,9 @@ public class Encouracado extends Navio{
 		int opcao = JOptionPane.showConfirmDialog(null,"O encouraçado, armamento pesado!"
 				+ "\nPor 15 pontos o ataque especial dá"
 				+ "\na oportunidade de atacar cinco casas"
-				+ "em formato de uma cruz"
+				+ "\nem formato de uma cruz"
 				+ "\nQuer fazer isso?");
-		if(opcao == 1)
+		if(opcao == 0)
 			return true;
 		else
 			return false;
@@ -31,6 +31,11 @@ public class Encouracado extends Navio{
 	@Override
 	public String getNome() {
 		return "Encouraçado";
+	}
+
+	@Override
+	public int getPontosAtaqueEspecial() {
+		return 15;
 	}
 
 }

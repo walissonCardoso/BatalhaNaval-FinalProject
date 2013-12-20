@@ -13,9 +13,9 @@ public class Fragata extends Navio{
 		int opcao = JOptionPane.showConfirmDialog(null,"A fragata e seus canhões laterais!"
 				+ "\nPor 15 pontos o ataque especial dá"
 				+ "\na capacidade de atacar cinco casas"
-				+ "contiguas"
+				+ "\ncontiguas horizontais"
 				+ "\nQuer fazer isso?");
-		if(opcao == 1)
+		if(opcao == 0)
 			return true;
 		else
 			return false;
@@ -29,6 +29,11 @@ public class Fragata extends Navio{
 	@Override
 	public String getNome() {
 		return "Fragata";
+	}
+
+	@Override
+	public int getPontosAtaqueEspecial() {
+		return 15;
 	}
 
 }

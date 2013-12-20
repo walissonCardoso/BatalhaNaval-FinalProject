@@ -15,7 +15,7 @@ public class PortaAvioes extends Navio{
 				+ "\nPor 20 pontos o ataque especial dá"
 				+ "\na oportunidade de atacar quatro vezes."
 				+ "\nQuer fazer isso?");
-		if(opcao == 1)
+		if(opcao == 0)
 			return true;
 		else
 			return false;
@@ -29,6 +29,11 @@ public class PortaAvioes extends Navio{
 	@Override
 	public String getNome() {
 		return "Porta Aviões";
+	}
+
+	@Override
+	public int getPontosAtaqueEspecial() {
+		return 20;
 	}
 
 }
